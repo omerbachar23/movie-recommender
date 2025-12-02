@@ -15,7 +15,11 @@ def home():
 
 @app.route("/recommend", methods=["POST"])
 def recommend():
-    query = request.json.get("query", "")
-    # your TF-IDF filtering logic goes here
-    results = ["Example Movie 1", "Example Movie 2"]
+    data = request.get_json()
+    query = data.get("query", "")
+    
+    # Example dummy recommendation
+    # Replace with your TF-IDF + filtering logic
+    results = df[df['title'].str.contains(query, case=False, na=False)]['title'].tolist()[:5]
+    
     return jsonify(results)
